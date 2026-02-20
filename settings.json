@@ -1,0 +1,18 @@
+{
+    "amount": 700,
+    "shortDesc": "Короткое описание ",
+    "longDesc": "Полное описание",
+    "backUrlSuccess": "https://tda-photo.ru",
+    "backUrlFail": "https://tda-photo.ru",
+    "extraParam": "o.amount=100",
+    "paymentPage": "pages",
+    "cpaExtensions": {},
+    "recurrentEnabled": false,
+    "selectedCardId": "",
+    "cardRegistrationEnabled": false,
+    "aftEnabled": false,
+    "aftMirExtensionType": "3ds2.destAbroadPAN",
+    "aftMirExtensionValue": "BLR4111111111111111",
+    "aftMirExtensionCountry": "BLR",
+    "aftMirExtensionPhone": ""
+}

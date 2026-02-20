@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Двухфазное взаимодействие</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .mobile-container {
+            max-width: 100%;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        
+        .mobile-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding-top: 40px;
+        }
+        
+        .mobile-header h1 {
+            font-size: 24px;
+            margin: 0;
+            font-weight: 600;
+        }
+        
+        .tiles-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .tile {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .tile:active {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tile.test {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+        
+        .tile.prod {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            color: white;
+        }
+        
+        .tile.settings {
+            background: linear-gradient(135deg, #FF9800, #F57C00);
+            color: white;
+        }
+        
+        .tile.callbacks {
+            background: linear-gradient(135deg, #9C27B0, #7B1FA2);
+            color: white;
+        }
+        
+        .settings-panel {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+        }
+        
+        .settings-panel label {
+            display: block;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: #333;
+            font-size: 16px;
+        }
+        
+        .settings-panel input, .settings-panel textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            box-sizing: border-box;
+            margin-top: 8px;
+            font-family: inherit;
+        }
+        
+        .settings-panel textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        
+        .save-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 18px 30px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .callback-item {
+            transition: all 0.3s ease;
+        }
+
+        .callback-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #callbackDetails {
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            z-index: 10000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            max-width: 300px;
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, #ff4757, #ff3838);
+        }
+
+        .json-examples {
+            margin: 10px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            font-size: 14px;
+        }
+
+        .json-examples-title {
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #2d3436;
+            font-size: 15px;
+        }
+
+        .example-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .example-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 8px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .example-btn:active {
+            transform: scale(0.95);
+            background: #5a6fd8;
+        }
+
+        .example-btn.submerchant { background: #4CAF50; }
+        .example-btn.ucof { background: #2196F3; }
+        .example-btn.mit { background: #FF9800; }
+        .example-btn.oct { background: #795548; }
+        .example-btn.p2p { background: #607D8B; }
+
+        .recurrent-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 2px solid #e9ecef;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #4CAF50;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .card-item {
+            padding: 12px;
+            margin: 8px 0;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .card-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .card-info {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .card-pan {
+            font-weight: 600;
+            color: #2d3436;
+            font-family: 'Courier New', monospace;
+        }
+
+        .card-selected {
+            border-left-color: #2196F3 !important;
+            background: #f0f8ff !important;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <div class="mobile-container">
+        <div class="mobile-header">
+            <h1>Двухфазное взаимодействие</h1>
+        </div>
+        
+        <div class="tiles-grid">
+            <button class="tile test" onclick="createOrder('test')">
+                ТЕСТ
+            </button>
+            <button class="tile prod" onclick="createOrder('prod')">
+                ПРОД
+            </button>
+            <button class="tile settings" onclick="toggleSettings()">
+                НАСТРОЙКИ
+            </button>
+            <button class="tile callbacks" onclick="showCallbacks()">
+                КОЛЛБЭКИ
+            </button>
+        </div>
+        
+        <div id="settingsPanel" class="settings-panel" style="display:none;">
+            <label>
+                Сумма:
+                <input type="number" id="amount" value="{{ settings.amount }}">
+            </label>
+            <label>
+                Краткое описание (shortDesc):
+                <input type="text" id="shortDesc" value="{{ settings.shortDesc }}" placeholder="Короткое описание платежа">
+            </label>
+            <label>
+                Полное описание (longDesc):
+                <textarea id="longDesc" placeholder="Полное описание платежа">{{ settings.longDesc }}</textarea>
+            </label>
+            <label>
+                back_url_s:
+                <input type="text" id="backUrlSuccess" value="{{ settings.backUrlSuccess }}">
+            </label>
+            <label>
+                back_url_f:
+                <input type="text" id="backUrlFail" value="{{ settings.backUrlFail }}">
+            </label>
+            <label>
+                Платежная страница:
+                <input type="text" id="paymentPage" value="{{ settings.paymentPage }}" placeholder="pages, pages-timelimit, etc">
+            </label>
+            <label>
+                Дополнительный o.параметр:
+                <input type="text" id="extraParam" value="{{ settings.extraParam }}" placeholder="Например: o.name=Ivanov">
+            </label>
+            
+            <div class="recurrent-section">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                    <label style="font-weight: 600; color: #2d3436; font-size: 16px; margin: 0;">
+                        Рекуррентный платеж
+                    </label>
+                    <label class="switch">
+                        <input type="checkbox" id="recurrentEnabled">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                
+                <div id="cardSelection" style="display: none;">
+                    <label style="font-weight: 600; color: #2d3436; font-size: 14px; margin-bottom: 10px; display: block;">
+                        Выберите сохраненную карту:
+                    </label>
+                    <select id="selectedCardId" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px; background: white;">
+                        <option value="">-- Выберите карту --</option>
+                    </select>
+                    
+                    <div id="cardsList" style="margin-top: 15px; max-height: 200px; overflow-y: auto;">
+                        <!-- Список карт будет загружаться здесь -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="recurrent-section">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                    <label style="font-weight: 600; color: #2d3436; font-size: 16px; margin: 0;">
+                        Регистрация карт (pages-rec)
+                    </label>
+                    <label class="switch">
+                        <input type="checkbox" id="cardRegistrationEnabled">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="recurrent-section">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                    <label style="font-weight: 600; color: #2d3436; font-size: 16px; margin: 0;">
+                        AFT платеж (международный перевод)
+                    </label>
+                    <label class="switch">
+                        <input type="checkbox" id="aftEnabled">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                
+                <div id="aftSettings" style="display: none; margin-top: 15px;">
+                    <label style="font-weight: 600; color: #2d3436; font-size: 14px; margin-bottom: 10px; display: block;">
+                        Тип получателя для MCC 6538:
+                    </label>
+                    <select id="aftMirExtensionType" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px; background: white; margin-bottom: 15px;">
+                        <option value="3ds2.destAbroadPAN">Карта получателя (PAN)</option>
+                        <option value="3ds2.destAbroadIBAN">Счет IBAN</option>
+                        <option value="3ds2.destAbroadSWIFT">SWIFT + телефон</option>
+                    </select>
+                    
+                    <label style="font-weight: 600; color: #2d3436; font-size: 14px; margin-bottom: 10px; display: block;">
+                        Значение (код страны + данные):
+                    </label>
+                    <input type="text" id="aftMirExtensionValue" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px; font-family: 'Courier New', monospace;" 
+                           placeholder="Например: BLR411xxxxxxxxx1111">
+                    
+                    <div style="margin-top: 10px; font-size: 12px; color: #666; background: #f8f9fa; padding: 10px; border-radius: 6px;">
+                        <strong>Формат:</strong><br>
+                        • PAN: BLR + номер карты (например: BLR4111111111111111)<br>
+                        • IBAN: BLR + IBAN (например: BLRBY86AKBB10100000002966000000)<br>
+                        • SWIFT: BLR + SWIFT + телефон (например: BLRALFABY2X37544781070)<br>
+                        <em>API сервер автоматически разделит код страны и данные</em>
+                    </div>
+                    
+                    <div class="json-examples" style="margin-top: 15px;">
+                        <div class="json-examples-title">Примеры для MCC 6538:</div>
+                        <div class="example-buttons">
+                            <button class="example-btn" onclick="setAftExample('pan')" style="background: #4CAF50;">PAN карты</button>
+                            <button class="example-btn" onclick="setAftExample('iban')" style="background: #2196F3;">IBAN счета</button>
+                            <button class="example-btn" onclick="setAftExample('swift')" style="background: #FF9800;">SWIFT+телефон</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <label>
+                CPA расширения (JSON для генерации XML):
+                <textarea id="cpaExtensions" placeholder='{
+  "submerchant-data": {
+    "city": "Moscow",
+    "country": "RUS",
+    "id": "SUB123",
+    "name": "Test Submerchant",
+    "terminal-id": "TERM001",
+    "mcc": "1234",
+    "inn": "1234567890"
+  },
+  "order-params": [
+    {
+      "name": "card_on_file",
+      "value": "UCOF"
+    }
+  ],
+  "transaction-type": "Payment"
+}' style="font-family: 'Courier New', monospace; font-size: 12px; min-height: 200px;"></textarea>
+            </label>
+            
+            <div class="json-examples">
+                <div class="json-examples-title">Быстрые примеры XML расширений:</div>
+                <div class="example-buttons">
+                    <button class="example-btn submerchant" onclick="setExample('submerchant')">Подмагазин</button>
+                    <button class="example-btn ucof" onclick="setExample('ucof')">UCOF</button>
+                    <button class="example-btn mit" onclick="setExample('mit')">MIT</button>
+                    <button class="example-btn oct" onclick="setExample('oct')">OCT</button>
+                    <button class="example-btn p2p" onclick="setExample('p2p')">P2P</button>
+                </div>
+            </div>
+            
+            <button class="save-btn" onclick="saveSettings()">СОХРАНИТЬ</button>
+        </div>
+
+        <div id="callbacksPanel" class="settings-panel" style="display:none;">
+            <h3 style="text-align: center; margin-bottom: 20px; color: #333;">История коллбэков</h3>
+            <div id="callbacksList" style="max-height: 400px; overflow-y: auto;">
+                <!-- Сюда будут загружаться токены -->
+            </div>
+            <div id="callbackDetails" style="display: none; margin-top: 20px; padding: 20px; background: rgba(255, 255, 255, 0.95); border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h4 style="margin: 0; color: #333;">Детали коллбэка</h4>
+                    <button onclick="$('#callbackDetails').hide();" style="background: #ff4757; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">✕ Закрыть</button>
+                </div>
+                <div style="background: #2d3436; color: #f5f6fa; padding: 15px; border-radius: 8px; max-height: 400px; overflow-y: auto;">
+                    <pre id="callbackData" style="margin: 0; white-space: pre-wrap; font-family: 'Courier New', monospace; font-size: 12px; line-height: 1.4;"></pre>
+                </div>
+                <div style="margin-top: 15px; text-align: center;">
+                    <button onclick="copyCallbackData()" style="background: #0984e3; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 14px;">📋 Копировать JSON</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    let currentSettings = {{ settings|tojson }};
+    let isCreatingOrder = false;
+
+    function setExample(type) {
+        let examples = {
+            'submerchant': `{
+  "submerchant-data": {
+    "city": "Moscow",
+    "country": "RUS",
+    "id": "SUB123",
+    "name": "Test Submerchant",
+    "terminal-id": "TERM001",
+    "mcc": "1234",
+    "inn": "1234567890"
+  }
+}`,
+            'ucof': `{
+  "order-params": [
+    {
+      "name": "card_on_file",
+      "value": "UCOF"
+    }
+  ]
+}`,
+            'mit': `{
+  "order-params": [
+    {
+      "name": "card_on_file", 
+      "value": "MIT"
+    }
+  ]
+}`,
+            'oct': `{
+  "transaction-type": "OCT"
+}`,
+            'p2p': `{
+  "transaction-type": "P2P"
+}`
+        };
+        
+        $("#cpaExtensions").val(examples[type]);
+        showNotification('Пример загружен! Проверьте JSON перед сохранением', 'success');
+    }
+
+    function setAftExample(type) {
+        const examples = {
+            'pan': {
+                type: '3ds2.destAbroadPAN',
+                value: 'BLR4111111111111111'
+            },
+            'iban': {
+                type: '3ds2.destAbroadIBAN',
+                value: 'BLRBY86AKBB10100000002966000000'
+            },
+            'swift': {
+                type: '3ds2.destAbroadSWIFT',
+                value: 'BLRALFABY2X37544781070'
+            }
+        };
+        
+        const example = examples[type];
+        $("#aftMirExtensionType").val(example.type);
+        $("#aftMirExtensionValue").val(example.value);
+        showNotification(`Пример ${type} загружен!`, 'success');
+    }
+
+    function validateJson(jsonString) {
+        try {
+            if (jsonString.trim() === '') return { valid: true, data: {} };
+            const parsed = JSON.parse(jsonString);
+            return { valid: true, data: parsed };
+        } catch (e) {
+            return { valid: false, error: e.message };
+        }
+    }
+
+    function toggleRecurrentSettings() {
+        const isEnabled = $("#recurrentEnabled").is(":checked");
+        if (isEnabled) {
+            $("#cardSelection").slideDown(300);
+            loadCards();
+        } else {
+            $("#cardSelection").slideUp(300);
+        }
+    }
+
+    function toggleAftSettings() {
+        const isEnabled = $("#aftEnabled").is(":checked");
+        if (isEnabled) {
+            $("#aftSettings").slideDown(300);
+            // Автоматически включаем transaction-type AFT в JSON
+            try {
+                const currentJson = $("#cpaExtensions").val();
+                let cpaData = currentJson.trim() ? JSON.parse(currentJson) : {};
+                cpaData["transaction-type"] = "AFT";
+                $("#cpaExtensions").val(JSON.stringify(cpaData, null, 2));
+            } catch (e) {
+                // Если JSON некорректен, просто покажем уведомление
+            }
+        } else {
+            $("#aftSettings").slideUp(300);
+        }
+    }
+
+    function loadCards() {
+        $.ajax({
+            url: "{{ url_for('tester.get_cards') }}",
+            method: "GET",
+            success: function(response) {
+                if (response.success) {
+                    displayCards(response.cards);
+                } else {
+                    $("#cardsList").html("<p style='text-align: center; color: #666; font-size: 13px;'>Нет сохраненных карт</p>");
+                }
+            },
+            error: function(xhr, status, error) {
+                $("#cardsList").html("<p style='text-align: center; color: #666; font-size: 13px;'>Ошибка загрузки карт</p>");
+            }
+        });
+    }
+
+    function displayCards(cards) {
+        if (cards.length === 0) {
+            $("#cardsList").html("<p style='text-align: center; color: #666; font-size: 13px;'>Нет сохраненных карт. Совершите успешный платеж для сохранения карты.</p>");
+            
+            $("#selectedCardId").html('<option value="">-- Нет доступных карт --</option>');
+            return;
+        }
+        
+        let selectHtml = '<option value="">-- Выберите карту --</option>';
+        let cardsHtml = '';
+        
+        cards.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        
+        cards.forEach(function(card, index) {
+            const timestamp = new Date(card.timestamp).toLocaleString('ru-RU');
+            const isSelected = card.card_id === currentSettings.selectedCardId;
+            
+            selectHtml += `<option value="${card.card_id}" ${isSelected ? 'selected' : ''}>${card.masked_pan || card.card_id} (${card.payment_system || 'N/A'})</option>`;
+            
+            cardsHtml += `<div class="card-item ${isSelected ? 'card-selected' : ''}" onclick="selectCard('${card.card_id}')">
+                <div class="card-pan">${card.masked_pan || 'Карта ' + card.card_id}</div>
+                <div class="card-info">
+                    <span>ID: ${card.card_id}</span>
+                    <span style="margin: 0 8px">•</span>
+                    <span>${card.payment_system || 'N/A'}</span>
+                    <span style="margin: 0 8px">•</span>
+                    <span>${card.expiry || 'N/A'}</span>
+                    <span style="margin: 0 8px">•</span>
+                    <span>${timestamp}</span>
+                </div>
+            </div>`;
+        });
+        
+        $("#selectedCardId").html(selectHtml);
+        $("#cardsList").html(cardsHtml);
+    }
+
+    function selectCard(cardId) {
+        $("#selectedCardId").val(cardId);
+        
+        $(".card-item").removeClass('card-selected');
+        $(`.card-item[onclick="selectCard('${cardId}')"]`).addClass('card-selected');
+    }
+
+    function createOrder(mode) {
+        if (isCreatingOrder) {
+            showNotification('Заказ уже создается, подождите...', 'error');
+            return;
+        }
+        
+        isCreatingOrder = true;
+        
+        $('.tile').prop('disabled', true).css('opacity', 0.6);
+        
+        const extraParam = $("#extraParam").val();
+        const paymentPage = $("#paymentPage").val() || "pages";
+        const recurrentEnabled = $("#recurrentEnabled").is(":checked");
+        const selectedCardId = $("#selectedCardId").val();
+        const cardRegistrationEnabled = $("#cardRegistrationEnabled").is(":checked");
+        const aftEnabled = $("#aftEnabled").is(":checked");
+        const aftMirExtensionType = $("#aftMirExtensionType").val();
+        const aftMirExtensionValue = $("#aftMirExtensionValue").val();
+        
+        if (recurrentEnabled && !selectedCardId) {
+            showNotification('Для рекуррентного платежа необходимо выбрать карту!', 'error');
+            isCreatingOrder = false;
+            $('.tile').prop('disabled', false).css('opacity', 1);
+            return;
+        }
+        
+        if (aftEnabled && (!aftMirExtensionType || !aftMirExtensionValue)) {
+            showNotification('Для AFT платежа необходимо заполнить данные получателя!', 'error');
+            isCreatingOrder = false;
+            $('.tile').prop('disabled', false).css('opacity', 1);
+            return;
+        }
+        
+        $.ajax({
+            url: "{{ url_for('tester.create_order') }}",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+                mode: mode,
+                extraParam: extraParam,
+                paymentPage: paymentPage,
+                recurrentEnabled: recurrentEnabled,
+                selectedCardId: selectedCardId,
+                cardRegistrationEnabled: cardRegistrationEnabled,
+                aftEnabled: aftEnabled,
+                aftMirExtensionType: aftMirExtensionType,
+                aftMirExtensionValue: aftMirExtensionValue
+            }),
+            success: function(response) {
+                if (response.success) {
+                    window.open(response.initiation_link, "_blank");
+                    showNotification('Заказ создан успешно!' + 
+                        (recurrentEnabled ? ' (Рекуррентный)' : '') + 
+                        (cardRegistrationEnabled ? ' (Регистрация карты)' : '') +
+                        (aftEnabled ? ' (AFT платеж)' : ''), 'success');
+                    setTimeout(loadCallbacks, 1000);
+                } else {
+                    showNotification('Ошибка создания заказа: ' + (response.error || 'неизвестная ошибка'), 'error');
+                }
+            },
+            error: function(xhr, status, error) {
+                showNotification('Ошибка соединения: ' + error, 'error');
+            },
+            complete: function() {
+                isCreatingOrder = false;
+                $('.tile').prop('disabled', false).css('opacity', 1);
+            }
+        });
+    }
+
+    function toggleSettings() {
+        $("#settingsPanel").slideToggle(300);
+        $("#callbacksPanel").slideUp(300);
+        $("#callbackDetails").hide();
+        
+        if ($("#settingsPanel").is(":visible")) {
+            $("#amount").val(currentSettings.amount || 100);
+            $("#shortDesc").val(currentSettings.shortDesc || "");
+            $("#longDesc").val(currentSettings.longDesc || "");
+            $("#backUrlSuccess").val(currentSettings.backUrlSuccess || "");
+            $("#backUrlFail").val(currentSettings.backUrlFail || "");
+            $("#extraParam").val(currentSettings.extraParam || "");
+            $("#paymentPage").val(currentSettings.paymentPage || "pages");
+            
+            $("#recurrentEnabled").prop('checked', currentSettings.recurrentEnabled || false);
+            if (currentSettings.recurrentEnabled) {
+                $("#cardSelection").show();
+                loadCards();
+            }
+            $("#selectedCardId").val(currentSettings.selectedCardId || "");
+            
+            $("#cardRegistrationEnabled").prop('checked', currentSettings.cardRegistrationEnabled || false);
+            
+            $("#aftEnabled").prop('checked', currentSettings.aftEnabled || false);
+            if (currentSettings.aftEnabled) {
+                $("#aftSettings").show();
+            }
+            $("#aftMirExtensionType").val(currentSettings.aftMirExtensionType || "3ds2.destAbroadPAN");
+            $("#aftMirExtensionValue").val(currentSettings.aftMirExtensionValue || "");
+            
+            $("#cpaExtensions").val("");
+        }
+    }
+
+    function showCallbacks() {
+        $("#callbacksPanel").slideToggle(300);
+        $("#settingsPanel").slideUp(300);
+        loadCallbacks();
+    }
+
+    function saveSettings() {
+        const settings = {
+            amount: parseFloat($("#amount").val()),
+            shortDesc: $("#shortDesc").val(),
+            longDesc: $("#longDesc").val(),
+            backUrlSuccess: $("#backUrlSuccess").val(),
+            backUrlFail: $("#backUrlFail").val(),
+            extraParam: $("#extraParam").val(),
+            paymentPage: $("#paymentPage").val() || "pages",
+            recurrentEnabled: $("#recurrentEnabled").is(":checked"),
+            selectedCardId: $("#selectedCardId").val(),
+            cardRegistrationEnabled: $("#cardRegistrationEnabled").is(":checked"),
+            aftEnabled: $("#aftEnabled").is(":checked"),
+            aftMirExtensionType: $("#aftMirExtensionType").val(),
+            aftMirExtensionValue: $("#aftMirExtensionValue").val()
+        };
+        
+        const cpaExtensionsText = $("#cpaExtensions").val();
+        const validation = validateJson(cpaExtensionsText);
+        if (!validation.valid) {
+            showNotification('Ошибка в JSON: ' + validation.error, 'error');
+            return;
+        }
+        settings.cpaExtensions = validation.data;
+        
+        $.ajax({
+            url: "{{ url_for('tester.save_settings_route') }}",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(settings),
+            success: function(response) {
+                if (response.success) {
+                    showNotification('Настройки сохранены!', 'success');
+                    $("#settingsPanel").slideUp(300);
+                    currentSettings = settings;
+                } else {
+                    showNotification('Ошибка сохранения настроек', 'error');
+                }
+            },
+            error: function(xhr, status, error) {
+                showNotification('Ошибка соединения: ' + error, 'error');
+            }
+        });
+    }
+
+    function loadCallbacks() {
+        $.ajax({
+            url: "{{ url_for('tester.get_callbacks') }}",
+            method: "GET",
+            success: function(response) {
+                if (response.success) {
+                    displayCallbacks(response.callbacks);
+                } else {
+                    $("#callbacksList").html("<p style='text-align: center; color: #666;'>Ошибка загрузки коллбэков</p>");
+                }
+            },
+            error: function(xhr, status, error) {
+                $("#callbacksList").html("<p style='text-align: center; color: #666;'>Ошибка соединения: " + error + "</p>");
+            }
+        });
+    }
+
+    function displayCallbacks(callbacks) {
+        if (callbacks.length === 0) {
+            $("#callbacksList").html("<p style='text-align: center; color: #666;'>Нет данных о коллбэках</p>");
+            return;
+        }
+        
+        let html = '';
+        callbacks.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        
+        callbacks.forEach(function(callback, index) {
+            const timestamp = new Date(callback.timestamp).toLocaleString('ru-RU');
+            const type = callback.data.type || 'order_created';
+            const isRPReq = type === 'RPReq';
+            
+            const rawParams = callback.data.raw_params || {};
+            const hasResult = rawParams.result_code || callback.data.result_code;
+            const isSuccess = hasResult === '1' || hasResult === 1;
+            
+            const operationToken = callback.token;
+            
+            html += `<div class="callback-item" style="padding: 12px; margin: 8px 0; background: white; border-radius: 10px; cursor: pointer; border-left: 4px solid ${isRPReq ? (isSuccess ? '#4CAF50' : '#ff4757') : '#FF9800'};" onclick="showCallbackDetails('${callback.token}')">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="flex: 1;">
+                                <div style="display: flex; align-items: center; margin-bottom: 5px;">
+                                    <strong style="color: #333; font-size: 14px;">token:</strong>
+                                    <span style="margin-left: 8px; font-family: 'Courier New', monospace; font-size: 13px; color: #2d3436; background: #f8f9fa; padding: 2px 6px; border-radius: 4px;">${operationToken}</span>
+                                </div>
+                                <div style="font-size: 12px; color: #666;">
+                                    <span>Тип: ${type}</span>
+                                    <span style="margin: 0 8px">•</span>
+                                    <span>Время: ${timestamp}</span>
+                                </div>
+                            </div>
+                            <div style="text-align: right; min-width: 80px;">
+                                ${isRPReq ? 
+                                    `<span style="background: ${isSuccess ? '#4CAF50' : '#ff4757'}; color: white; padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">RPReq</span><br>
+                                     <small style="font-size: 10px; color: ${isSuccess ? '#4CAF50' : '#ff4757'};">${isSuccess ? 'success' : 'fail'}</small>` :
+                                    `<span style="background: #FF9800; color: white; padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">CPAReq</span>`
+                                }
+                            </div>
+                        </div>
+                     </div>`;
+        });
+        $("#callbacksList").html(html);
+    }
+
+    function showCallbackDetails(token) {
+        $.ajax({
+            url: "{{ url_for('tester.get_callback_details') }}?token=" + token,
+            method: "GET",
+            success: function(response) {
+                if (response.success) {
+                    const formattedData = JSON.stringify(response.data, null, 2);
+                    $("#callbackData").text(formattedData);
+                    $("#callbackDetails").show();
+                    
+                    $('html, body').animate({
+                        scrollTop: $("#callbackDetails").offset().top
+                    }, 500);
+                } else {
+                    showNotification('Ошибка загрузки деталей коллбэка: ' + (response.error || 'неизвестная ошибка'), 'error');
+                }
+            },
+            error: function(xhr, status, error) {
+                showNotification('Ошибка загрузки деталей коллбэка: ' + error, 'error');
+            }
+        });
+    }
+
+    function copyCallbackData() {
+        const callbackData = document.getElementById('callbackData');
+        const textArea = document.createElement('textarea');
+        textArea.value = callbackData.textContent;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        
+        const btn = event.target;
+        const originalText = btn.textContent;
+        btn.textContent = '✅ Скопировано!';
+        btn.style.background = '#00b894';
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.background = '#0984e3';
+        }, 2000);
+    }
+
+    function showNotification(message, type) {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.transform = 'translateX(0)';
+        }, 100);
+        
+        setTimeout(() => {
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }, 2000);
+    }
+
+    $(document).ready(function() {
+        $("#amount").val(currentSettings.amount || 100);
+        $("#shortDesc").val(currentSettings.shortDesc || "");
+        $("#longDesc").val(currentSettings.longDesc || "");
+        $("#backUrlSuccess").val(currentSettings.backUrlSuccess || "");
+        $("#backUrlFail").val(currentSettings.backUrlFail || "");
+        $("#extraParam").val(currentSettings.extraParam || "");
+        $("#paymentPage").val(currentSettings.paymentPage || "pages");
+        
+        $("#recurrentEnabled").prop('checked', currentSettings.recurrentEnabled || false);
+        if (currentSettings.recurrentEnabled) {
+            $("#cardSelection").show();
+            loadCards();
+        }
+        $("#selectedCardId").val(currentSettings.selectedCardId || "");
+        
+        $("#cardRegistrationEnabled").prop('checked', currentSettings.cardRegistrationEnabled || false);
+        
+        $("#aftEnabled").prop('checked', currentSettings.aftEnabled || false);
+        if (currentSettings.aftEnabled) {
+            $("#aftSettings").show();
+        }
+        $("#aftMirExtensionType").val(currentSettings.aftMirExtensionType || "3ds2.destAbroadPAN");
+        $("#aftMirExtensionValue").val(currentSettings.aftMirExtensionValue || "");
+        
+        $("#cpaExtensions").val("");
+        
+        $("#recurrentEnabled").on('change', toggleRecurrentSettings);
+        $("#aftEnabled").on('change', toggleAftSettings);
+        
+        // Обработчик изменения типа получателя
+        $("#aftMirExtensionType").on('change', function() {
+            const type = $(this).val();
+            
+            // Примеры значений для каждого типа (с BLR в начале)
+            const examples = {
+                '3ds2.destAbroadPAN': 'BLR4111111111111111',
+                '3ds2.destAbroadIBAN': 'BLRBY86AKBB10100000002966000000',
+                '3ds2.destAbroadSWIFT': 'BLRALFABY2X37544781070'
+            };
+            
+            // Обновляем поле значения
+            if (examples[type]) {
+                $("#aftMirExtensionValue").val(examples[type]);
+            }
+        });
+    });
+
+    $(".tile").on("touchstart", function() {
+        if (navigator.vibrate) {
+            navigator.vibrate(50);
+        }
+    });
+
+    setInterval(function() {
+        if ($("#callbacksPanel").is(":visible")) {
+            loadCallbacks();
+        }
+    }, 30000);
+
+    $(document).keyup(function(e) {
+        if (e.key === "Escape") {
+            $("#callbackDetails").hide();
+        }
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+/* Фон страницы тестера */
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-image: url("backgrounds/background.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* Полупрозрачный overlay для лучшей читаемости */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.7); /* 60% прозрачности белого */
+    z-index: -1;
+}
+
+/* Стили для контента */
+.header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 20px; 
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+/* Кнопка Тест - зеленый */
+#btnTest {
+    background: #28a745 !important;
+    border: 1px solid #28a745 !important;
+}
+
+#btnTest:hover {
+    background: #218838 !important;
+}
+
+/* Кнопка Прод - красный */
+#btnProd {
+    background: #dc3545 !important;
+    border: 1px solid #dc3545 !important;
+}
+
+#btnProd:hover {
+    background: #c82333 !important;
+}
+
+/* Кнопка Настройки - синий */
+#btnSettings {
+    background: #007bff !important;
+    border: 1px solid #007bff !important;
+}
+
+#btnSettings:hover {
+    background: #0056b3 !important;
+}
+
+/* Кнопка Сохранить - синий */
+#saveSettings {
+    background: #007bff !important;
+    border: 1px solid #007bff !important;
+}
+
+#saveSettings:hover {
+    background: #0056b3 !important;
+}
+
+/* Общие стили кнопок */
+.buttons button { 
+    padding: 10px 20px; 
+    border-radius: 4px; 
+    border: none; 
+    color: #fff; 
+    cursor: pointer;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+/* Форма настроек */
+#settingsForm {
+    background: rgba(0, 123, 255, 0.1); /* Синий фон для формы */
+    border: 2px solid #007bff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+#settingsForm label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+#settingsForm input[type="number"],
+#settingsForm input[type="text"] {
+    width: 300px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.9);
+    margin-left: 10px;
+}

@@ -1,0 +1,250 @@
+[
+  {
+    "card_id": "VQB5UHDUUJBH",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "2612",
+    "payment_system": "VISA",
+    "timestamp": "2025-10-29T11:06:42.060323",
+    "registered": "Y"
+  },
+  {
+    "card_id": "VRP2NCB5OTHQ",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "2612",
+    "payment_system": "VISA",
+    "timestamp": "2025-10-29T11:36:39.196597",
+    "registered": "Y"
+  },
+  {
+    "card_id": "WJKSOJFCJ8LV",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "2612",
+    "payment_system": "VISA",
+    "timestamp": "2025-10-29T21:38:52.867156",
+    "registered": "Y"
+  },
+  {
+    "card_id": "XPOC06MTIBNJ",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "2612",
+    "payment_system": "VISA",
+    "timestamp": "2025-10-30T12:48:12.510949",
+    "registered": "Y"
+  },
+  {
+    "card_id": "LSHZID49CNJV",
+    "masked_pan": "220138xxxxxx0047",
+    "expiry": "2612",
+    "payment_system": "MIR",
+    "timestamp": "2025-11-12T12:53:39.016492",
+    "registered": "Y"
+  },
+  {
+    "card_id": "M33SR28U79GO",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "2612",
+    "payment_system": "VISA",
+    "timestamp": "2025-11-12T16:40:40.433360",
+    "registered": "Y"
+  },
+  {
+    "card_id": "M3X9ZVW521D8",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "2612",
+    "payment_system": "VISA",
+    "timestamp": "2025-11-12T16:58:21.614933",
+    "registered": "Y"
+  },
+  {
+    "card_id": "M4GE3M9VWEEB",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "2612",
+    "payment_system": "VISA",
+    "timestamp": "2025-11-12T17:09:50.959330",
+    "registered": "Y"
+  },
+  {
+    "card_id": "X9C4DQUNE0C9",
+    "masked_pan": "220138xxxxxx0047",
+    "expiry": "2612",
+    "payment_system": "MIR",
+    "timestamp": "2025-11-18T17:28:52.706382",
+    "registered": "Y"
+  },
+  {
+    "card_id": "2OCU1QVMDGBC",
+    "masked_pan": "512488xxxxxx0368",
+    "expiry": "3012",
+    "payment_system": "MASTERCARD",
+    "timestamp": "2025-11-21T15:41:18.606625",
+    "registered": "Y"
+  },
+  {
+    "card_id": "FCEV9WLYFR16",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "2612",
+    "payment_system": "VISA",
+    "timestamp": "2025-11-28T11:52:08.076532",
+    "registered": "Y"
+  },
+  {
+    "card_id": "FCGX5RY0RRKL",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "3012",
+    "payment_system": "VISA",
+    "timestamp": "2025-11-28T11:53:23.374645",
+    "registered": "Y"
+  },
+  {
+    "card_id": "FCIJG9BZHI71",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "3012",
+    "payment_system": "VISA",
+    "timestamp": "2025-11-28T11:54:20.887184",
+    "registered": "Y"
+  },
+  {
+    "card_id": "FCJS7NIO4KCH",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "3012",
+    "payment_system": "VISA",
+    "timestamp": "2025-11-28T11:55:05.698884",
+    "registered": "Y"
+  },
+  {
+    "card_id": "FCRM6E2KWX4U",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "3012",
+    "payment_system": "VISA",
+    "timestamp": "2025-11-28T11:59:47.099311",
+    "registered": "Y"
+  },
+  {
+    "card_id": "FCY1VYA4WVBZ",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "3012",
+    "payment_system": "VISA",
+    "timestamp": "2025-11-28T12:03:38.557151",
+    "registered": "Y"
+  },
+  {
+    "card_id": "PSFDTHWCSTJS3R",
+    "masked_pan": "220138******0047",
+    "expiry": "2512",
+    "payment_system": "VISA",
+    "timestamp": "2025-11-28T12:22:33.617808",
+    "registered": "Y"
+  },
+  {
+    "card_id": "FE5C05C8AUMJ",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "3012",
+    "payment_system": "VISA",
+    "timestamp": "2025-11-28T12:29:37.775409",
+    "registered": "Y"
+  },
+  {
+    "card_id": "FEAU8QB7LFLY",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "2612",
+    "payment_system": "VISA",
+    "timestamp": "2025-11-28T12:32:54.651460",
+    "registered": "Y"
+  },
+  {
+    "card_id": "FEBV68Y237CJ",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "3012",
+    "payment_system": "VISA",
+    "timestamp": "2025-11-28T12:33:32.817013",
+    "registered": "Y"
+  },
+  {
+    "card_id": "FECZEDI1X3XC",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "3012",
+    "payment_system": "VISA",
+    "timestamp": "2025-11-28T12:34:13.008205",
+    "registered": "Y"
+  },
+  {
+    "card_id": "FEHQRUW2HAMG",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "2612",
+    "payment_system": "VISA",
+    "timestamp": "2025-11-28T12:37:02.737954",
+    "registered": "Y"
+  },
+  {
+    "card_id": "FEW0XB1SILU9",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "2612",
+    "payment_system": "VISA",
+    "timestamp": "2025-11-28T12:45:36.589468",
+    "registered": "Y"
+  },
+  {
+    "card_id": "FFQ90QSSSREL",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "2612",
+    "payment_system": "VISA",
+    "timestamp": "2025-11-28T13:03:45.239483",
+    "registered": "Y"
+  },
+  {
+    "card_id": "FG5BYV31O9DY",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "2612",
+    "payment_system": "VISA",
+    "timestamp": "2025-11-28T13:12:47.444888",
+    "registered": "Y"
+  },
+  {
+    "card_id": "FGKGLN2BZO8Q",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "2612",
+    "payment_system": "VISA",
+    "timestamp": "2025-11-28T13:21:52.844749",
+    "registered": "Y"
+  },
+  {
+    "card_id": "FGLQ9Q5HXLU1",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "2612",
+    "payment_system": "VISA",
+    "timestamp": "2025-11-28T13:22:38.278227",
+    "registered": "Y"
+  },
+  {
+    "card_id": "FV99SMQ1MX9J",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "3012",
+    "payment_system": "VISA",
+    "timestamp": "2025-11-28T18:39:11.100975",
+    "registered": "Y"
+  },
+  {
+    "card_id": "OKYUR45VEISL",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "2612",
+    "payment_system": "VISA",
+    "timestamp": "2025-12-03T11:35:18.819562",
+    "registered": "Y"
+  },
+  {
+    "card_id": "PKDH8H582A80",
+    "masked_pan": "401200xxxxxx1112",
+    "expiry": "2612",
+    "payment_system": "VISA",
+    "timestamp": "2025-12-04T00:20:07.216178",
+    "registered": "Y"
+  },
+  {
+    "card_id": "SLRHY57JAHU1",
+    "masked_pan": "424242xxxxxx4242",
+    "expiry": "2612",
+    "payment_system": "VISA",
+    "timestamp": "2025-12-05T15:42:54.748564",
+    "registered": "Y"
+  }
+]
